@@ -27,7 +27,7 @@ def main():
 
     global df
     global projects
-    # utility.local_css()
+    utility.local_css()
 
     
     choice = st.sidebar.selectbox("Select an acitivity", projects)

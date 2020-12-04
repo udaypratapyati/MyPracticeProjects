@@ -38,3 +38,7 @@ ul.st-bu {
 /* .st-dd {
     flex-direction: row;
 } */
+
+.small-button {
+    background-color: darkcyan;
+}

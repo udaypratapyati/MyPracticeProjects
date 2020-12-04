@@ -12,13 +12,22 @@ def car_prediction():
 
     model = joblib.load('saved_models/rf_modle.pkl')
 
-    present_price = st.text_input("Present price in lakhs")
-    km_driven = st.text_input('KM driven')
-    year = st.text_input("Year")
+    col1, col2 = st.beta_columns(2)
+
+    with col1:
+        present_price = st.text_input("Present price in lakhs")
+        km_driven = st.text_input('KM driven')
+        year = st.text_input("Year")
+        # curr_year = datetime.datetime.now().year
+        # year = st.selectbox("Year", [i for i in range(curr_year, curr_year-20, -1)])
+        owner = st.selectbox("Owner", [i for i in range(0, 6)])
     car_age = 0
-    owner = st.selectbox("Owner", [i for i in range(0, 6)])
-    
-    petrol_type = st.selectbox("Fuel type", ["Petrol","Diesel","CNG"])
+
+    with col2:
+        petrol_type = st.selectbox("Fuel type", ["Petrol","Diesel","CNG"])
+        seller_type = st.selectbox("Seller type", ["Dealer","Individual"])
+        transmission_type = st.selectbox("Transmission type", ["Automatic","Manual"])
+
     fueltype_petrol = 0
     fueltype_diesle = 0
     if petrol_type == "Petrol":
@@ -27,25 +36,23 @@ def car_prediction():
     elif petrol_type == "Diesel":
         fueltype_petrol = 0
         fueltype_diesle = 1
-
-    seller_type = st.selectbox("Seller type", ["Dealer","Individual"])
+    
     if seller_type == "Dealer":
         seller_type = 1
     else:
         seller_type = 0
-
-    transmission_type = st.selectbox("Transmission type", ["Automatic","Manual"])
+    
     if transmission_type == "Manual":
         transmission_type = 1
     else:
         transmission_type = 0
 
     if st.button("Predict Selling Price"):
-        if present_price is None:
+        if not present_price:
             st.error("Enter Present Price")
-        elif km_driven is None:
+        elif not km_driven:
             st.error("Enter KM Driven")
-        elif year is None:
+        elif not year:
             st.error("Enter Year")
         else:
             car_age = datetime.datetime.now().year - int(year)
